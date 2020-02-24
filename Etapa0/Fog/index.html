@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Never trust the fog.</title>
+      <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    </head>
+    <body>
+       <a-scene fog="type: exponential; density: 0.15; color: #10454A;"
+               animation="property: fog.density; from: 0.15; to: 0.05; dur: 6000; dir: alternate; loop: true">
+       <a-assets>
+         <a-asset-item id="van" src="van/scene.gltf"></a-asset-item>  
+         <a-asset-item id="spinosaurus" src="spinosaurus/scene.gltf"></a-asset-item>  
+         <a-mixin id="transition" dur="10000" direction="alternate" repeat="indefinite" easing="ease-in-out"></a-mixin>
+       </a-assets>
+        
+       <a-sky color="#ECECEC"></a-sky>
+       <a-plane id="ground" position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#111" material="roughness: 1;"></a-plane>
+       <a-entity gltf-model="#van" position="0 0.5 -1.5" rotation="0 -90 0" scale="0.1 0.1 0.1"></a-entity>
+       <a-entity gltf-model="#spinosaurus" position="15 0.5 -15" rotation="0 -75 0" scale="0.15 0.15 0.15"></a-entity>
+       <a-entity gltf-model="#spinosaurus" position="-15 0.5 -15" rotation="0 45 0" scale="0.15 0.15 0.15"></a-entity>
+
+       <a-entity position="-4 5 7" rotation="-10 -15 0">
+        <a-camera></a-camera>
+	   </a-entity>
+           
+	   <a-light type="ambient" intensity="0.2"
+		animation="property: light.intensity; from: 0.2; to: 1; dur: 6000; dir: alternate; loop: true"></a-light>
+	   <a-light type="point" intensity="2" position="0 0.5 -7.5"></a-light>
+      </a-scene>    
+    </body>
+</html>

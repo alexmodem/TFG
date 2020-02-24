@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Evil Cone</title>  
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@3.0.3/dist/aframe-event-set-component.min.js"></script>
+  </head>
+  <body>
+
+    <a-scene environment="preset: egypt">
+      <a-assets>
+        <img id="pyramidTexture" src="https://live.staticflickr.com/28/42366328_2dba7ae11b_b.jpg">
+      </a-assets>        
+        <a-cone
+          src="#pyramidTexture"
+          position="0 0 -7.5"
+          scale="4 5 4"
+          animation="property: object3D.rotation.y; to: 360; dur: 10000; loop: true">
+            <a-cylinder 
+              color="red" 
+              height="1.5" 
+              radius="0.01"
+              position="0 0.5 0.75"
+              rotation="90 0 0"></a-cylinder>
+        </a-cone>
+
+        <a-box
+          position="-5 0 -10"
+          color="#fff6ac"
+          scale="1 7 1"
+          event-set__down="_event: mousedown; scale:1 4 1"
+          event-set__up="_event: mouseup; scale:1 7 1"
+          event-set__leave="_event: mouseleave; scale:1 7 1"></a-box>
+
+        <a-box
+          position="-5 0 -5"
+          color="#fff6ac"
+          scale="1 7 1"
+          event-set__down="_event: mousedown; scale:1 4 1"
+          event-set__up="_event: mouseup; scale:1 7 1"
+          event-set__leave="_event: mouseleave; scale:1 7 1"></a-box>
+
+        <a-box
+          position="5 0 -10"
+          color="#fff6ac"
+          scale="1 7 1"
+          event-set__down="_event: mousedown; scale:1 4 1"
+          event-set__up="_event: mouseup; scale:1 7 1"
+          event-set__leave="_event: mouseleave; scale:1 7 1"></a-box>
+
+        <a-box
+          position="5 0 -5"
+          color="#fff6ac"
+          scale="1 7 1"
+          event-set__down="_event: mousedown; scale:1 4 1"
+          event-set__up="_event: mouseup; scale:1 7 1"
+          event-set__leave="_event: mouseleave; scale:1 7 1"></a-box>
+
+        <a-light type="ambient"></a-light>
+        <a-camera>
+          <a-cursor></a-cursor>
+        </a-camera>
+
+    </a-scene>
+  </body>
+</html>
