@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Cube generator</title>
+    <title>Polygon generator</title>
     <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
     <script src="index.js"></script>
 
@@ -11,10 +11,18 @@
 <a-scene>
     <a-box id="remote" scale="1 2.5 0.5" position="-1 1.25 -3" color="yellow" >
         <a-box id="menuButton" scale="0.3 0.1 0.15" position="-0.25 0.25 0.6" color="green" menu-loader></a-box>
-        <a-box id="selectedOption" scale="0.3 0.1 0.15" position="0.25 0.25 0.6" color="green" menu-loader></a-box>
-        <a-box id="creator" scale="0.5 0.1 0.15" position="0 0 0.6" color="red" polygenerator></a-box>
-    </a-box>
+        <a-box id="selectedOption" scale="0.3 0.1 0.15" position="0.25 0.25 0.6" color="pink">
+            <a-entity id="opt" scale="0.5 0.5 0.5" position="0 0 1"></a-entity>
+        </a-box>
+        <a-box id="creator" scale="0.5 0.1 0.15" position="0 -0.2 0.6" color="red" polygenerator></a-box>
+        <a-entity id="colorSelector" position="0 0.04 1">
+            <a-plane id="pickBlue" scale="0.2 0.1 0.2" material="color: blue" position="-0.2 0 0" color-changer></a-plane>
+            <a-plane id="pickPurple" scale="0.2 0.1 0.2" material="color: purple" position="0 0 0" color-changer></a-plane>
+            <a-plane id="pickPink" scale="0.2 0.1 0.2" material="color: orange" position="0.2 0 0" color-changer></a-plane>
+            <a-plane id="pickBlack" scale="0.2 0.1 0.2" material="color: black" position="0.4 0 0" color-changer></a-plane>
+        </a-entity>
 
+    </a-box>
 
     <a-camera>
         <a-cursor></a-cursor>
