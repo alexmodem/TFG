@@ -1,7 +1,5 @@
 AFRAME.registerComponent('option-select', {
-    schema:{
-        option: {type: 'string'}
-    },
+    schema:{ },
 
     multiple: true,
 
@@ -13,6 +11,8 @@ AFRAME.registerComponent('option-select', {
             let optDisplay = document.querySelector("#opt");
             optDisplay.setAttribute('geometry', "primitive: "+e.target.id);
             optDisplay.setAttribute('material', e.target.getAttribute('material'));
+            optDisplay.setAttribute('scale', "0.3 0.3 0.3");
+            optDisplay.setAttribute('animation', "property: rotation; from: 0 90 0 ;to: 360 450 0; loop: true; dur: 3000;");
 
             //Removing the menu
             el.parentNode.parentNode.removeChild(el.parentNode);
@@ -24,7 +24,7 @@ AFRAME.registerComponent('option-select', {
 
 AFRAME.registerComponent('menu-loader', {
     schema:{
-        options: {default: ["box", "cone", "cylinder"]}
+        options: {default: ["box", "octahedron", "icosahedron"]}
     },
 
     init: function () {
@@ -32,6 +32,13 @@ AFRAME.registerComponent('menu-loader', {
         let el = this.el;
 
         let addEventListener = el.addEventListener('click', (e) => {
+
+            //Delete if polygon displayed
+            let polyDisplayed = document.querySelector("#polygon");
+            if (polyDisplayed){
+                polyDisplayed.parentNode.removeChild(polyDisplayed);
+            }
+
             let menu = document.createElement('a-entity');
             menu.setAttribute('geometry', "primitive: plane");
             menu.setAttribute('position', "1 2.25 -3");
