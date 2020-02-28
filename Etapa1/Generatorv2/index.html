@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Polygon generator</title>
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+    <script src="index.js"></script>
+
+</head>
+<body>
+<a-scene cursor="rayOrigin:mouse" environment="preset: japan">
+    <a-box id="remote" scale="1 0.5 0.5" position="0 2 -3" color="yellow" >
+        <a-box id="menuButton" scale="0.3 0.5 0.15" position="-0.25 0 0.6" color="green" menu-figures>
+            <a-text value="Figures" align="center" position="0 0 0.5"></a-text>
+        </a-box>
+        <a-box id="menuColors" scale="0.3 0.5 0.15" position="0.25 0 0.6" color="red" menu-colors>
+            <a-text value="Colors" align="center" position="0 0 0.5"></a-text>
+        </a-box>
+    </a-box>
+
+
+</a-scene>
+</body>
+</html>
