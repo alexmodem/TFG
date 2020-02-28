@@ -10,12 +10,20 @@
 </head>
 <body>
 <a-scene cursor="rayOrigin:mouse" environment="preset: japan">
-    <a-box id="remote" scale="1 0.5 0.5" position="0 2 -3" color="yellow" >
-        <a-box id="menuButton" scale="0.3 0.5 0.15" position="-0.25 0 0.6" color="green" menu-figures>
+    <a-assets>
+        <img id="gold" src="assets/gold.jpg">
+        <img id="bricks" src="assets/bricks.jpg">
+        <img id="metal" src="assets/metal.jpg">
+    </a-assets>
+    <a-box id="remote" scale="2 0.5 0.5" position="0 2 -3" color="yellow" >
+        <a-box id="menuButton" scale="0.2 0.5 0.15" position="-0.34 0 0.6" color="green" menu-figures>
             <a-text value="Figures" align="center" position="0 0 0.5"></a-text>
         </a-box>
-        <a-box id="menuColors" scale="0.3 0.5 0.15" position="0.25 0 0.6" color="red" menu-colors>
+        <a-box id="menuColors" scale="0.2 0.5 0.15" position="0.34 0 0.6" color="red" menu-colors>
             <a-text value="Colors" align="center" position="0 0 0.5"></a-text>
+        </a-box>
+        <a-box id="menuTextures" scale="0.2 0.5 0.15" position="0 0 0.6" color="red" menu-textures>
+            <a-text value="Textures" align="center" position="0 0 0.5"></a-text>
         </a-box>
     </a-box>
 

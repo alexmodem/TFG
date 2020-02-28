@@ -1,5 +1,5 @@
 AFRAME.registerComponent('menu-figures', {
-    schema:{
+    schema: {
         options: {default: ["box", "octahedron", "icosahedron"]}
     },
 
@@ -8,12 +8,6 @@ AFRAME.registerComponent('menu-figures', {
         let el = this.el;
 
         let addEventListener = el.addEventListener('click', (e) => {
-
-            //Delete if polygon displayed
-            // let polyDisplayed = document.querySelector("#polygon");
-            // if (polyDisplayed){
-            //     polyDisplayed.parentNode.removeChild(polyDisplayed);
-            // }
 
             let menu = document.createElement('a-entity');
             menu.setAttribute('geometry', "primitive: plane");
@@ -46,7 +40,7 @@ AFRAME.registerComponent('menu-colors', {
         options: {default: ["blue", "purple", "orange", "black"]}
     },
 
-    init: function (qualifiedName, value) {
+    init: function () {
         let data = this.data;
         let el = this.el;
 
@@ -68,7 +62,7 @@ AFRAME.registerComponent('menu-colors', {
                 optButton.setAttribute('position', ((options.indexOf(option)*0.2)-0.3)+" 0 0.01");
                 optButton.setAttribute('scale', "0.1 0.3 0.1");
                 optButton.setAttribute('material', "color:"+option);
-                optButton.setAttribute('color-changer', option);
+                optButton.setAttribute('texture-changer', "");
                 menu.appendChild(optButton);
             }
 
@@ -160,10 +154,8 @@ AFRAME.registerComponent('polygenerator', {
     }
 });
 
-AFRAME.registerComponent('color-changer', {
-    schema:{
-        color: {default:""}
-    },
+AFRAME.registerComponent('texture-changer', {
+    schema:{    },
 
     multiple: true,
 
@@ -173,5 +165,45 @@ AFRAME.registerComponent('color-changer', {
             let poly = document.querySelector("#tokenPoly").parentNode;
             poly.setAttribute('material', e.target.getAttribute('material'));
         });
+    }
+});
+
+AFRAME.registerComponent('menu-textures', {
+    schema:{
+        options: {default: ["gold", "bricks", "metal"]}
+    },
+
+    init: function () {
+        let data = this.data;
+        let el = this.el;
+
+        let addEventListener = el.addEventListener('click', (e) => {
+
+            let menu = document.createElement('a-entity');
+            menu.setAttribute('geometry', "primitive: plane");
+            menu.setAttribute('id', "textureSelector");
+            menu.setAttribute('position', "0 3 -3");
+            menu.setAttribute('scale', "2.5 1 0.5");
+            menu.setAttribute('material', "color: grey");
+
+            //Including options in the menu
+            let options = data.options;
+            for (let option of options){
+                            
+                let textureOpt = document.querySelector("#"+option).src;
+                let optButton = document.createElement('a-entity');
+                console.log(textureOpt);
+                optButton.setAttribute('geometry', "primitive: plane");
+                optButton.setAttribute('id', "pickTexture"+option);
+                optButton.setAttribute('position', ((options.indexOf(option)*0.3)-0.3)+" 0 0.01");
+                optButton.setAttribute('scale', "0.2 0.3 0.1");
+                optButton.setAttribute('material', 'src:'+textureOpt);
+                optButton.setAttribute('texture-changer', "");
+                menu.appendChild(optButton);
+            }
+
+            el.sceneEl.appendChild(menu);
+        });
+
     }
 });
