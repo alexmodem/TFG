@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Polygon generator</title>
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+    <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="poly.js"></script>
+    <script src="menus.js"></script>
+
+</head>
+<body>
+<a-scene cursor="rayOrigin:mouse" environment="preset: default">
+    <a-assets>
+        <img id="gold" src="assets/gold.jpg">
+        <img id="bricks" src="assets/bricks.jpg">
+        <img id="metal" src="assets/metal.jpg">
+        <a-asset-item id="van" src="assets/van/scene.gltf"></a-asset-item>  
+        <a-asset-item id="spinosaurus" src="assets/spinosaurus/scene.gltf"></a-asset-item>  
+    </a-assets>
+   
+      <a-entity id="cameraUser"
+                camera wasd-controls position="0 1.6 0"
+                capture-mouse
+                raycaster="objects: #tokenPoly" cursor="rayOrigin:mouse"
+                static-body="shape: sphere; sphereRadius: 0.001"
+                super-hands="colliderEvent: raycaster-intersection;
+                             colliderEventProperty: els;
+                             colliderEndEvent:raycaster-intersection-cleared;
+                             colliderEndEventProperty: clearedEls;">
+
+        <a-box id="remoteFigures" scale="0.3 0.3 0.005" position="-0.5 -0.5 -1" rotation="-45 15 0" color="yellow" opacity="0.3">
+            <a-box id="polygonButton" scale="0.9 0.4 0.15" position="0 0.25 0.6" color="green" opacity="0.5" menu-polygons>
+                <a-text value="Polygons" align="center" position="0 0 0.61"></a-text>
+            </a-box>
+            <a-box id="figuresButton" scale="0.9 0.4 0.15" position="0 -0.25 0.6" color="green" opacity="0.5" menu-figures>
+                <a-text value="Figures" align="center" position="0 0 0.61"></a-text>
+            </a-box>
+        </a-box>
+      </a-entity>
+
+</a-scene>
+</body>
+</html>
