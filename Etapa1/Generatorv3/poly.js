@@ -1,3 +1,42 @@
+AFRAME.registerComponent('rotator', {
+    schema: {},
+
+    init: function () {
+        let el = this.el;
+        let rotating = false;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        el.addEventListener('dragstart', (e) => {
+            offsetX= document.querySelector('#cameraUser').getAttribute('raycaster').direction.x;
+            offsetY= document.querySelector('#cameraUser').getAttribute('raycaster').direction.y;
+            rotating=true;
+            document.addEventListener('mousemove', (e) =>{
+            if (rotating){
+                    let mouseX = document.querySelector('#cameraUser').getAttribute('raycaster').direction.x;
+                    let mouseY = document.querySelector('#cameraUser').getAttribute('raycaster').direction.y;
+
+                    let aux_X = mouseX - offsetX;
+                    let aux_Y = mouseY - offsetY;
+
+                    el.parentNode.object3D.rotateX(aux_Y*10);
+                    el.parentNode.object3D.rotateY(aux_X*10);
+                    offsetX = mouseX;
+                    offsetY = mouseY;
+
+                }
+            })
+
+        });
+
+        el.addEventListener('dragend', (e) => {
+            rotating=false;
+        });
+
+    }
+});
+
+
 AFRAME.registerComponent('set-move', {
     init: function () {
         let el = this.el;
@@ -9,12 +48,14 @@ AFRAME.registerComponent('set-move', {
             selectorTok.setAttribute('position', "0 1.2 0");
             selectorTok.setAttribute('scale', "0.1 0.1 0.1");
             selectorTok.setAttribute('material', "color:#47f41c");
-           
+
 
             let token = document.querySelector('#tokenPoly');
             let parent = token.parentNode;
-            token.parentNode.removeChild(token);
+            parent.setAttribute('grabbable',"");
+            parent.removeChild(token);
 
+            console.log("ES GRABB");
             parent.appendChild(selectorTok);
         });
 
@@ -32,14 +73,15 @@ AFRAME.registerComponent('set-rotate', {
             selectorTok.setAttribute('position', "0 1.2 0");
             selectorTok.setAttribute('scale', "0.1 0.1 0.1");
             selectorTok.setAttribute('material', "color:#47f41c");
-           
+            selectorTok.setAttribute('rotator', "");
+
 
             let token = document.querySelector('#tokenPoly');
             let parent = token.parentNode;
             token.parentNode.removeChild(token);
             parent.appendChild(selectorTok);
 
-            parent.removeAttribute('grabbable');
+            //parent.removeAttribute('grabbable');
 
         });
 
@@ -57,7 +99,7 @@ AFRAME.registerComponent('poly-selectable', {
             selectorTok.setAttribute('position', "0 1.2 0");
             selectorTok.setAttribute('scale', "0.1 0.1 0.1");
             selectorTok.setAttribute('material', "color:#47f41c");
-           
+
 
             let token = document.querySelector('#tokenPoly');
             token.parentNode.removeChild(token);
@@ -95,7 +137,7 @@ AFRAME.registerComponent('polygenerator', {
                 let colorsButton = document.createElement('a-box');
                 colorsButton.setAttribute("id", "menuColors");
                 colorsButton.setAttribute("scale", "0.7 0.15 0.15");
-                colorsButton.setAttribute("position", "0 0.4 0.6");
+                colorsButton.setAttribute("position", "0 0.3 0.6");
                 colorsButton.setAttribute("menu-colors", "");
                 colorsButton.setAttribute("color", "red");
                 colorsButton.setAttribute("opacity", "0.5");
@@ -108,7 +150,7 @@ AFRAME.registerComponent('polygenerator', {
                 let texturesButton = document.createElement('a-box');
                 texturesButton.setAttribute("id", "menuTextures");
                 texturesButton.setAttribute("scale", "0.7 0.15 0.15");
-                texturesButton.setAttribute("position", "0 0.2 0.6");
+                texturesButton.setAttribute("position", "0 0.1 0.6");
                 texturesButton.setAttribute("menu-textures", "");
                 texturesButton.setAttribute("color", "red");
                 texturesButton.setAttribute("opacity", "0.5");
@@ -122,7 +164,7 @@ AFRAME.registerComponent('polygenerator', {
                 let moveButton = document.createElement('a-box');
                 moveButton.setAttribute("id", "moveButton");
                 moveButton.setAttribute("scale", "0.7 0.15 0.15");
-                moveButton.setAttribute("position", "0 0 0.6");
+                moveButton.setAttribute("position", "0 -0.1 0.6");
                 moveButton.setAttribute("color", "grey");
                 moveButton.setAttribute('set-move', "");
                 moveButton.setAttribute("opacity", "0.5");
@@ -136,7 +178,7 @@ AFRAME.registerComponent('polygenerator', {
                 let rotateButton = document.createElement('a-box');
                 rotateButton.setAttribute("id", "rotateButton");
                 rotateButton.setAttribute("scale", "0.7 0.15 0.15");
-                rotateButton.setAttribute("position", "0 -0.2 0.6");
+                rotateButton.setAttribute("position", "0 -0.3 0.6");
                 rotateButton.setAttribute("color", "grey");
                 rotateButton.setAttribute("set-rotate", "");
                 rotateButton.setAttribute("opacity", "0.5");
@@ -146,27 +188,11 @@ AFRAME.registerComponent('polygenerator', {
                 textRotate.setAttribute('position', "0 0 0.61");
                 rotateButton.appendChild(textRotate);
 
-                //Stretch button
-                let stretchButton = document.createElement('a-box');
-                stretchButton.setAttribute("id", "stretchButton");
-                stretchButton.setAttribute("scale", "0.7 0.15 0.15");
-                stretchButton.setAttribute("position", "0 -0.4 0.6");
-                stretchButton.setAttribute("color", "grey");
-                stretchButton.setAttribute("opacity", "0.5");
-                let textStretch = document.createElement('a-text');
-                textStretch.setAttribute('value', "Stretch");
-                textStretch.setAttribute('align', "center");
-                textStretch.setAttribute('position', "0 0 0.61");
-                stretchButton.appendChild(textStretch);
-
-
-
                 let camera = document.querySelector("#cameraUser");
                 menu.appendChild(colorsButton);
                 menu.appendChild(texturesButton);
                 menu.appendChild(moveButton);
                 menu.appendChild(rotateButton);
-                menu.appendChild(stretchButton);
                 camera.appendChild(menu);
 
 
@@ -183,11 +209,11 @@ AFRAME.registerComponent('polygenerator', {
             poly.setAttribute('geometry', el.getAttribute('geometry'));
             poly.setAttribute('class', 'polygon');
             poly.setAttribute('scale', '0.5 0.5 0.5');
-            poly.setAttribute('position', (polyID-4)+" 1 -3"); 
+            poly.setAttribute('position', (polyID-4)+" 1 -3");
             poly.setAttribute('material', el.getAttribute('material'));
             poly.setAttribute('grabbable',"");
             poly.setAttribute('poly-selectable',"");
-            
+
 
             //Creating selector
             //Selector is child of polygon
